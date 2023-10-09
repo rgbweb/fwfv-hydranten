@@ -1,0 +1,16 @@
+<div
+  class="leaflet-map"
+  leaflet
+  [leafletOptions]="mapOptions"
+  [leafletLayers]="hydrantLayers"
+  [leafletFitBounds]="fitBounds!"
+  (leafletMapReady)="onMapReady($event)"
+></div>
+
+<ng-container *ngIf="isGeolocationEnabled">
+  <leaflet-locate-control
+    [options]="locateControlOptions"
+    [map]="mapInstance!"
+    (location$)="onNewLocation($event)"
+  ></leaflet-locate-control>
+</ng-container>

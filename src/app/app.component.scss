@@ -1,0 +1,46 @@
+$primary: #ee1d25;
+
+.page {
+  position: relative;
+
+  .navbar {
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+
+    .navbar-brand {
+      padding: 0;
+    }
+  }
+
+  .page-body {
+    overflow-y: auto;
+    z-index: 1;
+
+    app-map {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.loading-spinner {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+
+  &__spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  &__label {
+    text-shadow: 0 0 3px #fff;
+  }
+}

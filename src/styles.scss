@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+$primary: #ee1d25;
+
+$border-radius: 2px;
+$border-radius-lg: 2px;
+$border-radius-sm: 2px;
+
+$navbar-light-toggler-border-color: rgba(0, 0, 0, 0.5);
+
+$modal-content-border-width: 0;
+$modal-header-border-width: 0;
+$modal-footer-border-width: 0;
+
+@function toRGB($color) {
+  @return "rgb(" + red($color) + ", " + green($color) + ", " + blue($color) +
+    ")";
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "node_modules/leaflet/dist/leaflet.css";
+
+@import "leaflet.locatecontrol/dist/L.Control.Locate.css";
+
+html {
+  width: 100%;
+  height: 100%;
+
+  body {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+  }
+}
+
+.hydrant-tooltip {
+  border-radius: 2px;
+
+  &--default {
+    z-index: 1;
+  }
+
+  &--highlighted {
+    background: $primary;
+    border-color: $primary;
+    color: #fff;
+    z-index: 2;
+
+    &::before {
+      border-top-color: $primary;
+    }
+  }
+
+  &:hover {
+    z-index: 3;
+  }
+}
+
+// Geolocation Button
+.leaflet-control-locate {
+  &.active {
+    a {
+      .leaflet-control-locate-location-arrow {
+        background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(0, 0, 0)" d="M445 4 29 195c-48 23-32 93 19 93h176v176c0 51 70 67 93 19L508 67c16-38-25-79-63-63z"/></svg>');
+      }
+    }
+  }
+
+  &.following {
+    a {
+      .leaflet-control-locate-location-arrow {
+        background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="' + toRGB(
+            $primary
+          ) + '" d="M445 4 29 195c-48 23-32 93 19 93h176v176c0 51 70 67 93 19L508 67c16-38-25-79-63-63z"/></svg>');
+      }
+    }
+  }
+}

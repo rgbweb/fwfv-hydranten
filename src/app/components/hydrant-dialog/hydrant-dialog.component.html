@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <dl>
+    <dt>Typ</dt>
+    <dd>{{ hydrant.type }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Position</dt>
+    <dd>{{ hydrant.position }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Beschreibung</dt>
+    <dd>{{ hydrant.description }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Durchmesser</dt>
+    <dd>{{ hydrant.diameter }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Kupplungstyp</dt>
+    <dd>{{ hydrant.couplingType }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Anschlüsse</dt>
+    <dd>{{ hydrant.couplings }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Betreiber</dt>
+    <dd>{{ hydrant.operator }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Wasserherkunft</dt>
+    <dd>{{ hydrant.waterSource }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Referenz</dt>
+    <dd>{{ hydrant.reference }}</dd>
+  </dl>
+
+  <dl>
+    <dt>Datum</dt>
+    <dd>{{ hydrant.date }}</dd>
+  </dl>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="bsModalRef.hide()"
+  >
+    Schließen
+  </button>
+</div>
