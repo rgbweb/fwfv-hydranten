@@ -26,6 +26,7 @@ import { Hydrant } from 'src/app/types/hydrant.class';
 import { nameof } from 'src/app/utils/nameof';
 import { HydrantDialogComponent } from '../hydrant-dialog/hydrant-dialog.component';
 import { NgxLeafletLocateComponent } from '@runette/ngx-leaflet-locate';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 const DEFAULT_CENTER: LatLng = latLng(52.520262523297994, 13.75383048808331);
 
@@ -50,10 +51,15 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
   locateControlOptions: Control.LocateOptions;
   isGeolocationEnabled = false;
 
+  customTooltipsStyleElement: SafeHtml | undefined;
+
   private hydrantIcon: DivIcon;
   private isLocateControlStarted = false;
 
-  constructor(private modalService: BsModalService) {
+  constructor(
+    private modalService: BsModalService,
+    private sanitizer: DomSanitizer
+  ) {
     this.mapOptions = {
       layers: [
         tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
@@ -69,7 +75,7 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
 
     this.locateControlOptions = {
       position: 'bottomleft',
-      flyTo: true,
+      // flyTo: true,
       // keepCurrentZoomLevel: true,
       locateOptions: {
         // setView: true,
@@ -105,11 +111,12 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
     const hasHiglightedHydrants =
       !!changes[nameof<MapComponent>('higlightedHydrants')];
 
-    if (hasHydrantsChanges || hasHiglightedHydrants) {
+    if (hasHydrantsChanges) {
       this.createHydrantLayers();
     }
 
     if (hasHiglightedHydrants) {
+      this.updateHighlightedHydrantsStyle();
       this.updateHightlightedMapBounds();
     }
   }
@@ -145,16 +152,14 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
         icon: this.hydrantIcon,
       });
 
-      const stateClass = this.isHydrantHighlighted(hydrant)
-        ? 'hydrant-tooltip--highlighted'
-        : 'hydrant-tooltip--default';
+      const uniqueClass = this.getUniqueTooltipClass(hydrant);
 
       pin.bindTooltip(hydrant.reference, {
         permanent: true,
         direction: 'top',
         opacity: 1,
         interactive: true,
-        className: `hydrant-tooltip ${stateClass}`,
+        className: `hydrant-tooltip ${uniqueClass}`,
       });
 
       pin.on('click', (event: LeafletMouseEvent) => {
@@ -166,9 +171,36 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
     });
   }
 
-  private isHydrantHighlighted(hydrant: Hydrant): boolean {
-    // the array elements are pointing to the same objects, so we can do simple ref-comparison
-    return this.higlightedHydrants.includes(hydrant);
+  private getUniqueTooltipClass(hydrant: Hydrant): string {
+    return 'hydrant-tooltip__' + hydrant.id;
+  }
+
+  private updateHighlightedHydrantsStyle() {
+    const highlightedClasses = [];
+    for (const hydrant of this.hydrants) {
+      if (this.higlightedHydrants.includes(hydrant)) {
+        highlightedClasses.push('.' + this.getUniqueTooltipClass(hydrant));
+      }
+    }
+
+    if (highlightedClasses.length) {
+      this.customTooltipsStyleElement = this.sanitizer.bypassSecurityTrustHtml(`
+        <style>
+          ${highlightedClasses.join(',')} {
+            background: #ee1d25;
+            border-color: #ee1d25;
+            color: #fff;
+            z-index: 2;
+
+            &::before {
+              border-top-color: #ee1d25;
+            }
+          }
+        </style>
+      `);
+    } else {
+      this.customTooltipsStyleElement = undefined;
+    }
   }
 
   private updateHightlightedMapBounds() {

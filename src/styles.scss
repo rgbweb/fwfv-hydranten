@@ -38,21 +38,10 @@ html {
 
 .hydrant-tooltip {
   border-radius: 2px;
+  z-index: 1;
 
-  &--default {
-    z-index: 1;
-  }
-
-  &--highlighted {
-    background: $primary;
-    border-color: $primary;
-    color: #fff;
-    z-index: 2;
-
-    &::before {
-      border-top-color: $primary;
-    }
-  }
+  // Note: The CSS selector for highlighted tooltips is added dynamically in the `map.component.ts`
+  // for all matching tooltop elements and the style is therefore part of that components code
 
   &:hover {
     z-index: 3;
