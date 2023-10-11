@@ -95,10 +95,6 @@ export class AppComponent implements OnInit {
     }, 100);
   }
 
-  startPdfCreation() {
-    // todo: quadrat auf bildschrim anzeigen, dann den ausschnitt als bild speichern und anschließend in pdf umwandeln
-  }
-
   private loadHydrants() {
     this.hydrantsService.loadHydrants().subscribe({
       next: (hydrants: Hydrant[]) => {
@@ -108,9 +104,6 @@ export class AppComponent implements OnInit {
         this.highlightedHydrants = this.filteredHydrants;
 
         this.isLoading = false;
-      },
-      error: (error: string) => {
-        // todo: fehler im dialog oder so?
       },
     });
   }

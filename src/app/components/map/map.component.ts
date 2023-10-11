@@ -75,12 +75,7 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
 
     this.locateControlOptions = {
       position: 'bottomleft',
-      // flyTo: true,
-      // keepCurrentZoomLevel: true,
       locateOptions: {
-        // setView: true,
-        // watch: true,
-        // maxZoom: 17,
         enableHighAccuracy: true,
       },
       clickBehavior: {
@@ -89,20 +84,11 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
         inViewNotFollowing: 'setView',
       },
       showPopup: false,
-      // setView: 'untilPanOrZoom',
-      // initialZoomLevel: 17,
     };
 
     this.hydrantIcon = new DivIcon({
       html: '',
-      // iconUrl: 'assets/5_pixel_by_5_pixel_red_dot_clear_back.png',
-      // shadowUrl: 'assets/5_pixel_by_5_pixel_red_dot_clear_back.png',
-
-      iconSize: [0, 0], // size of the icon
-      // shadowSize: [5, 5], // size of the shadow
-      // iconAnchor: [2, 2], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62],  // the same for the shadow
-      // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      iconSize: [0, 0],
     });
   }
 
@@ -137,13 +123,6 @@ export class MapComponent implements OnChanges, OnInit, AfterViewChecked {
 
   onMapReady(map: Map) {
     this.mapInstance = map;
-
-    // map.locate({ setView: true, watch: true, maxZoom: 17 });
-    // map.locate({ setView: true, maxZoom: 17 });
-  }
-
-  onNewLocation(event: LocationEvent) {
-    // console.log('New Map Location', event);
   }
 
   private createHydrantLayers() {

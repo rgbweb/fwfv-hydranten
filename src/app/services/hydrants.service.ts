@@ -20,13 +20,6 @@ export class HydrantsService {
       node["emergency"="fire_hydrant"](area);
       out;
       `;
-    // NOTE: Der area[name=...] Filter soll laut Doku irgendwann entfernt werden.
-    // Alternative mit simpler Bounding Box, die aber auch einige Hydranten aus Nachbarorten mit abruft:
-    // `
-    // [out:json][bbox:52.48582772911161,13.717632293701172,52.55495927452999,13.77737045288086];
-    // node["emergency"="fire_hydrant"];
-    // out;
-    // `
 
     return this.httpClient
       .post<OverpassJson>('https://overpass-api.de/api/interpreter', postData)
